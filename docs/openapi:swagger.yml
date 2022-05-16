@@ -1,0 +1,211 @@
+openapi: '3.0.2'
+info:
+  title: The Parking Api
+  version: '1.0'
+servers:
+  - url: https://api.server.test/v1
+
+
+paths:
+  /floor:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Floor'
+    put:
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: OK
+    post:
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: OK
+    delete:
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: OK
+  /ticket:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ticket'
+    put:
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: OK
+    post:
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: OK
+    delete:
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: OK
+  /signup:
+    post:
+      tags:
+      - user
+      summary: Create user
+      description: User get created
+      operationId: createUser
+      requestBody:
+        description: User to create
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/UserPost'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/User'
+        400:
+          description: invalid input data
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/RequestError'
+  /login:
+    post:
+      tags:
+      - user
+      summary: Logs in an user
+      description: Logs in user
+      operationId: loginUser
+      requestBody:
+        description: Access Token
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/UserToken'
+        400:
+          description: invalid input data
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/RequestError'
+components:
+  schemas:
+    Floor:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 6202f814ae29e81c406c7 31c
+        code:
+          type: integer
+        description:
+          type: string
+        spotsQty:
+          type: integer
+    Ticket:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 6202f814ae29e81c406c731c
+        startDate:
+          type: string
+          format: date-time
+          example: '2022-05-16T12:14:50.212Z'
+        endDate:
+          type: string
+          format: date-time
+          example: '2022-05-16T12:16:50.212Z'
+        spotNumber:
+          type: number
+          format: integer
+          example: 12
+
+    UserLogin:
+      type: object
+      properties:
+        email:
+          type: string
+          example: 'rodrigo@gmail.com'
+        password:
+          type: string
+          example: 'asjdiajdiasj'
+      xml:
+        name: User
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 6202f814ae29e81c406c731c
+        name:
+          type: string
+          example: 'Rodrigo Saez'
+        email:
+          type: string
+          example: 'rodrigo@gmail.com'
+        password:
+          type: string
+          example: 'asjdiajdiasj'
+      xml:
+        name: User
+    UserToken:
+      type: object
+      properties:
+        token:
+          type: string
+          example: 'eaahsusahudahsudhajdsiajdsi'
+    UserPost:
+      type: object
+      properties:
+        name:
+          type: string
+          example: 'Rodrigo Saez'
+        email:
+          type: string
+          example: 'rodrigo@gmail.com'
+        password:
+          type: string
+          example: 'asjdiajdiasj'
+      xml:
+        name: User
+    RequestError:
+      type: object
+      properties:
+        message:
+          type: string
+          example: 'NOT_FOUND'
+        severity:
+          example: 'HIGH'
+          type: string
