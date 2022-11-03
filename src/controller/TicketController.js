@@ -44,7 +44,7 @@ class TicketController {
       res.status(404).json({ message: 'ID no encontrado' })
       return
     }
-    let ticket = { ...req.body, _id: req.params.id }
+    let ticket = { ...req.body, ticketId: req.params.id }
     ticket = await TicketService.getInstance().update(ticket)
     res.json(ticket)
   }

@@ -46,7 +46,7 @@ class FloorController {
     if (existFloor == null) {
       res.status(404).json({ message: 'Not found' })
     }
-    let floor = { ...req.body, _id: req.params.id }
+    let floor = { ...req.body, floorId: req.params.id }
     floor = await FloorService.getInstance().update(floor)
     res.json(floor)
   }
