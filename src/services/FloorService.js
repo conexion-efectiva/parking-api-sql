@@ -1,4 +1,4 @@
-const floorModel = require('../persistence/FloorModel')
+const floorModel = require('../persistence/FloorRepository')
 
 /**
  * @type FloorService
@@ -8,26 +8,25 @@ let instance = null
 
 class FloorService {
   async get(id) {
-    return await floorModel.find({ _id: id })
+    return await floorModel.getInstance().getById(id)
   }
 
   async list() {
-    return await floorModel.find()
+    return await floorModel.getInstance().list()
   }
 
   async update(floor) {
-    await floorModel.updateOne({ _id: floor._id }, floor)
+    await floorModel.getInstance().update(floor)
     return floor
   }
 
   async insert(floor) {
-    const result = await floorModel.create(floor)
-    return result.toObject()
+    await floorModel.getInstance().insert(floor)
+    return floor
   }
 
   async delete(id) {
-    return await floorModel.deleteOne({ _id: id })
-  }
+    return await floorModel.getInstance().delete(id)}
 
   static getInstance() {
     if (instance == null) {

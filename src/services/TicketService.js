@@ -1,29 +1,29 @@
-const ticketModel = require('../persistence/TicketModel')
+const ticketModel = require('../persistence/TicketRepository')
 /**
  * @type TicketService
  */
 let instance = null
 class TicketService {
   async get(id) {
-    return await ticketModel.find({ _id: id })
+    return await ticketModel.getInstance().getById(id)
   }
 
   async list() {
-    return await ticketModel.find()
+    return await ticketModel.getInstance().list()
   }
 
   async update(ticket) {
-    await ticketModel.updateOne({ _id: ticket._id }, ticket)
+    await ticketModel.getInstance().update(ticket)
     return ticket
   }
 
   async insert(ticket) {
-    const result = await ticketModel.create(ticket)
-    return result.toObject()
+    await ticketModel.getInstance().insert(ticket)
+    return ticket
   }
 
   async delete(id) {
-    return await ticketModel.deleteOne({ _id: id })
+    return await ticketModel.getInstance().detele(id)
   }
 
   static getInstance() {
